@@ -13,7 +13,7 @@ export const Home = () => {
 
     const submitHandler = async e => {
         e.preventDefault()
-        await axios.post('http://localhost:8080/api/url', {
+        await axios.post('https://url-shortener-kjie.onrender.com/api/url', {
             origin: link,
         }, {withCredentials: true, headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}})
             .then(function (response) {
@@ -26,7 +26,7 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/url', {
+        axios.get('https://url-shortener-kjie.onrender.com/api/url', {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }, {withCredentials: true})
             .then(function (response) {
@@ -68,7 +68,7 @@ export const Home = () => {
             ) : (
                 data ? (
                     <ul className="list-group">
-                        {data.map(url => <li className="list-group-item mb-20"><a target="_blank" style={{textDecoration: `none`}} className="text-muted" href={"http://localhost:3000/"+url.UUID}>http://localhost:8080/{url.UUID}</a>, {url['origin']}</li>)}
+                        {data.map(url => <li className="list-group-item mb-20"><a target="_blank" style={{textDecoration: `none`}} className="text-muted" href={"https://url-shortener-kjie.onrender.com/"+url.UUID}>https://url-shortener-kjie.onrender.com/{url.UUID}</a>, {url['origin']}</li>)}
                     </ul>
                 ) : (
                     <h1></h1>

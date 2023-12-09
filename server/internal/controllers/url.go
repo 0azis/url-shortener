@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strings"
@@ -42,7 +41,6 @@ func (u *urlControllers) ShortLink(c echo.Context) error {
 
 	shortLink, err := u.UrlServices.CreateLink(newUrl)
 	if err != nil {
-		fmt.Println(err)
 		return &echo.HTTPError{
 			Code:    500,
 			Message: "An error while creating a short link",

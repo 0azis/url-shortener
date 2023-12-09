@@ -5,7 +5,7 @@ import axios from "axios";
 export const Url = () => {
     let { uuid } = useParams()
     const shortLink = async() => {
-        await axios.get(`http://localhost:8080/api/url/${uuid}`, {
+        await axios.get(`https://url-shortener-kjie.onrender.com/api/url/${uuid}`, {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }, {withCredentials: true})
             .then(function (response) {

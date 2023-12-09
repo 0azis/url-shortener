@@ -22,7 +22,7 @@ export const SignUp = () => {
     const submitHandler = async e => {
         e.preventDefault()
         isLoading(true)
-        await axios.post('http://localhost:8080/api/auth/signup', {
+        await axios.post('https://url-shortener-kjie.onrender.com/api/auth/signup', {
             email: credentials.email,
             password: credentials.password
         }, {withCredentials: true})

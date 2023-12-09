@@ -11,6 +11,7 @@ function App() {
     <BrowserRouter>
     <Routes>
         <Route path="*" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={[<NavBar />, <Home />]} />
         <Route path="/:uuid" element={<Url />} />

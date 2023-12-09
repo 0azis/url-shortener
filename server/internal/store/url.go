@@ -58,8 +58,6 @@ func (u *url) GetByUserID(userid int) ([]models.Url, error) {
 		resultUrls = append(resultUrls, url)
 	}
 
-	fmt.Println(resultUrls)
-
 	return resultUrls, nil
 }
 

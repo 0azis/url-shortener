@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"url-shortener/internal/models"
@@ -68,8 +67,6 @@ func (a *authControllers) SignIn(c echo.Context) error {
 			Message: "Bad request",
 		}
 	}
-
-	fmt.Println(credentials)
 
 	userDB, err := a.UserServices.IsUserExists(credentials.Email)
 
