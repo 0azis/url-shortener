@@ -68,7 +68,7 @@ export const Home = () => {
             ) : (
                 data ? (
                     <ul className="list-group">
-                        {data.map(url => <li className="list-group-item mb-20"><a target="_blank" style={{textDecoration: `none`}} className="text-muted" href={"https://url-shortener-kjie.onrender.com/"+url.UUID}>https://url-shortener-kjie.onrender.com/{url.UUID}</a>, {url['origin']}</li>)}
+                        {data.map(url => <li className="list-group-item mb-20"><a target="_blank" style={{textDecoration: `none`}} className="text-muted" href={"https://url-shortener-dusky-zeta.vercel.app/"+url.UUID}>https://url-shortener-kjie.onrender.com/{url.UUID}</a>, {url['origin']}</li>)}
                     </ul>
                 ) : (
                     <h1></h1>
