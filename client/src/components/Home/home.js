@@ -17,11 +17,11 @@ export const Home = () => {
             origin: link,
         }, {withCredentials: true, headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}})
             .then(function (response) {
-                if (response.status === 201) {
-                    console.log("RESPONSE", response.data)
-                    setData(response.data)
-                    console.log("new data", data)
+                if (response.status == 201) {
+                    setData([...data, response.data])
+                    setLink('')
                 }
+
             })
     }
 
@@ -30,8 +30,13 @@ export const Home = () => {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }, {withCredentials: true})
             .then(function (response) {
-                setData(response.data)
-                isLoading(false)
+                if (response.data == null) {
+                    setData([])
+                    isLoading(false)
+                } else {
+                    setData(response.data)
+                    isLoading(false)
+                }
             })
             .catch(function (error) {
                 navigate('/signin')
@@ -63,7 +68,7 @@ export const Home = () => {
             ) : (
                 data ? (
                     <ul className="list-group">
-                        {data.map(url => <li className="list-group-item mb-20"><a style={{textDecoration: `none`}} className="text-muted" href={"http://localhost:8080/"+url.UUID}>http://localhost:8080/{url.UUID}</a>, {url['origin']}</li>)}
+                        {data.map(url => <li className="list-group-item mb-20"><a target="_blank" style={{textDecoration: `none`}} className="text-muted" href={"http://localhost:3000/"+url.UUID}>http://localhost:8080/{url.UUID}</a>, {url['origin']}</li>)}
                     </ul>
                 ) : (
                     <h1></h1>

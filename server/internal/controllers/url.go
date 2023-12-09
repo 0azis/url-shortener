@@ -89,6 +89,24 @@ func (u *urlControllers) GetMyUrls(c echo.Context) error {
 	return c.JSON(200, myUrls)
 }
 
+func (u *urlControllers) RedirectByLink(c echo.Context) error {
+	uuid := c.Param("uuid")
+
+	urlOrigin, err := u.UrlServices.UrlOrigin(uuid)
+
+	if err != nil {
+		return &echo.HTTPError{
+			Code:    http.StatusInternalServerError,
+			Message: err,
+		}
+	}
+
+	return &echo.HTTPError{
+		Code:    http.StatusOK,
+		Message: urlOrigin,
+	}
+}
+
 func GetUrlControllers(store store.InterfaceStore) urlControllers {
 	urlServices := services.GetUrlServices(store)
 	return urlControllers{

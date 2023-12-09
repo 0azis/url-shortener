@@ -12,7 +12,8 @@ var LengthUUID int = 6
 type interfaceUrl interface {
 	Insert(url models.Url) (models.Url, error)
 	Delete(userID int, urlID string) (string, error)
-	GetByID(userid int) ([]models.Url, error)
+	GetByUserID(userid int) ([]models.Url, error)
+	GetOrigin(urlID string) (string, error)
 }
 
 type url struct {
@@ -42,7 +43,7 @@ func (u *url) Delete(userID int, urlID string) (string, error) {
 	return deletedID, err
 }
 
-func (u *url) GetByID(userid int) ([]models.Url, error) {
+func (u *url) GetByUserID(userid int) ([]models.Url, error) {
 	var resultUrls []models.Url
 
 	rows, err := u.db.Query(fmt.Sprintf("select * from urls where userid = %d", userid))
@@ -60,4 +61,21 @@ func (u *url) GetByID(userid int) ([]models.Url, error) {
 	fmt.Println(resultUrls)
 
 	return resultUrls, nil
+}
+
+func (u *url) GetOrigin(urlID string) (string, error) {
+	var origin string
+
+	row, err := u.db.Query(fmt.Sprintf("select origin from urls where id = '%s'", urlID))
+
+	if err != nil {
+		return "", err
+	}
+
+	for row.Next() {
+		row.Scan(&origin)
+	}
+
+	return origin, nil
+
 }

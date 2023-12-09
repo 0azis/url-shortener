@@ -12,6 +12,7 @@ type UrlService interface {
 	CreateLink(url models.Url) (models.Url, error)
 	DeleteLink(userID int, id string) error
 	GetUrls(userID int) ([]models.Url, error)
+	UrlOrigin(urlID string) (string, error)
 }
 
 type Url struct {
@@ -44,13 +45,24 @@ func (u *Url) DeleteLink(userID int, urlID string) error {
 
 func (u *Url) GetUrls(userID int) ([]models.Url, error) {
 
-	resultUrls, err := u.Store.Urls().GetByID(userID)
+	resultUrls, err := u.Store.Urls().GetByUserID(userID)
 
 	if err != nil {
 		return resultUrls, errors.New("An error while getting your urls")
 	}
 
 	return resultUrls, nil
+}
+
+func (u *Url) UrlOrigin(urlID string) (string, error) {
+
+	resultOrigin, err := u.Store.Urls().GetOrigin(urlID)
+
+	if err != nil {
+		return resultOrigin, errors.New("The link is broke")
+	}
+
+	return resultOrigin, nil
 }
 
 func GetUrlServices(store store.InterfaceStore) Url {

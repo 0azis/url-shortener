@@ -2,7 +2,9 @@ package store
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"os"
 )
 
 type InterfaceStore interface {
@@ -17,10 +19,9 @@ type store struct {
 }
 
 func (s *store) Open() {
-	db, err := sql.Open("sqlite3", "/home/oazis/url-shortener.db")
-	if err != nil {
-		panic(err)
-	}
+	entries, _ := os.ReadDir("./")
+	fmt.Println(entries)
+	db, _ := sql.Open("sqlite3", "./url-shortener.db")
 
 	s.db = db
 }
