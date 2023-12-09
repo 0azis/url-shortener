@@ -14,7 +14,6 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={[<NavBar />, <Home />]} />
         <Route path="/:uuid" element={<Url />} />
-
     </Routes>
     </BrowserRouter>
   );
