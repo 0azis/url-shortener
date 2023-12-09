@@ -12,7 +12,7 @@ func InitServer() {
 
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins:     []string{"https://url-shortener-dusky-zeta.vercel.app/"},
-		AllowHeaders:     []string{"*"},
+		AllowHeaders:     []string{"Content-Type", "Authorization", "Access-Control-Allow-Origin"},
 		AllowMethods:     []string{"GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"},
 		AllowCredentials: true,
 	}))
