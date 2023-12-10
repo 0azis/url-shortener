@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Container, Form, Spinner} from "react-bootstrap";
+import {Button, Container, Form, Spinner, Stack} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
 
@@ -10,10 +10,28 @@ export const Home = () => {
     const [loading, isLoading] = useState(true)
     const [data, setData] = useState([])
     const [link, setLink] = useState('')
+    const [delUrl, setDelUrl] = useState('')
+
+    const deleteHandler = async e => {
+        e.preventDefault()
+        await axios.delete(`http://localhost:8080/api/url?url_id=${delUrl}`, {
+            headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+        }, {withCredentials: true})
+            .then(function (response) {
+                if (response.status == 200) {
+                    setData(current =>
+                        current.filter(url => {
+                            return url.UUID != delUrl
+                        }),
+                    );
+                }
+
+            })
+    }
 
     const submitHandler = async e => {
         e.preventDefault()
-        await axios.post('https://url-shortener-kjie.onrender.com/api/url', {
+        await axios.post('http://localhost:8080/api/url', {
             origin: link,
         }, {withCredentials: true, headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}})
             .then(function (response) {
@@ -26,7 +44,7 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        axios.get('https://url-shortener-kjie.onrender.com/api/url', {
+        axios.get('http://localhost:8080/api/url', {
             headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
         }, {withCredentials: true})
             .then(function (response) {
@@ -68,7 +86,16 @@ export const Home = () => {
             ) : (
                 data ? (
                     <ul className="list-group">
-                        {data.map(url => <li className="list-group-item mb-20"><a target="_blank" style={{textDecoration: `none`}} className="text-muted" href={"https://url-shortener-dusky-zeta.vercel.app/"+url.UUID}>https://url-shortener-dusky-zeta.vercel.app/{url.UUID}</a>, {url['origin']}</li>)}
+                        {data.map(url =>
+                            <li className="list-group-item mb-20" style={{display: `flex`, alignItems: `center`, justifyContent: `space-between`}}>
+                                <div className="info">
+                                    <a target="_blank" style={{textDecoration: `none`}} className="text-muted" href={"http://localhost:3000/"+url.UUID}>url-shortener-dusky-zeta.vercel.app/{url.UUID}</a>, {url['origin']}
+                                </div>
+                                <form method="DELETE" onSubmit={deleteHandler}>
+                                    <Button variant="outline-danger" style={{fontSize: `14px`}} type="submit" onClick={e => setDelUrl(url.UUID)}>Удалить</Button>
+                                </form>
+                            </li>
+                        )}
                     </ul>
                 ) : (
                     <h1></h1>

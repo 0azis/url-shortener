@@ -14,5 +14,5 @@ func urlControllers(api *echo.Group, store store.InterfaceStore) {
 	url.POST("", controller.ShortLink)
 	url.DELETE("", controller.DeleteLink)
 	url.GET("", controller.GetMyUrls)
-	url.GET("/:uuid", controller.RedirectByLink)
+	api.GET("/:uuid", controller.RedirectByLink)
 }
